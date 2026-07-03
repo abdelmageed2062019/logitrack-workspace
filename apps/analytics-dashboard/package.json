@@ -1,15 +1,17 @@
 {
-  "name": "@repo/ui",
+  "name": "analytics-dashboard",
   "version": "0.0.0",
   "private": true,
-  "exports": {
-    ".": "./src/index.ts",
-    "./components/*": "./src/components/*.tsx"
-  },
   "scripts": {
+    "build": "next build",
+    "dev": "next dev -p 3003",
     "lint": "eslint . --max-warnings 0",
-    "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "^15.3.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -18,14 +20,6 @@
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "eslint": "^9.39.1",
-    "tailwindcss": "^3.4.19",
     "typescript": "5.9.2"
-  },
-  "dependencies": {
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "tailwind-merge": "^3.6.0"
   }
 }

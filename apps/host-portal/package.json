@@ -1,31 +1,30 @@
 {
-  "name": "@repo/ui",
+  "name": "host-portal",
   "version": "0.0.0",
   "private": true,
-  "exports": {
-    ".": "./src/index.ts",
-    "./components/*": "./src/components/*.tsx"
-  },
   "scripts": {
+    "build": "next build",
+    "dev": "next dev -p 3000",
     "lint": "eslint . --max-warnings 0",
-    "generate:component": "turbo gen react-component",
     "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@repo/ui": "workspace:*",
+    "next": "^15.3.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
+    "@repo/tailwind-config": "workspace:*",
+    "autoprefixer": "^10.4.21",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.19",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^22.15.3",
     "@types/react": "19.2.2",
     "@types/react-dom": "19.2.2",
     "eslint": "^9.39.1",
-    "tailwindcss": "^3.4.19",
     "typescript": "5.9.2"
-  },
-  "dependencies": {
-    "class-variance-authority": "^0.7.1",
-    "clsx": "^2.1.1",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "tailwind-merge": "^3.6.0"
   }
 }
