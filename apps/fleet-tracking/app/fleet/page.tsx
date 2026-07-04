@@ -77,7 +77,7 @@ export default function FleetPage() {
         </button>
       </div>
 
-      <FleetMap staticTrucks={trucksData} />
+      <FleetMap staticTrucks={trucksData} activeFilter={activeFilter} />
     </div>
   );
 }
