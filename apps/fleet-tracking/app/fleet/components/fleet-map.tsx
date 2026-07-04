@@ -1,6 +1,7 @@
 "use client";
 
-import { MapContainer, TileLayer, CircleMarker, Popup } from "react-leaflet";
+import { useEffect } from "react";
+import { MapContainer, TileLayer, CircleMarker, Popup, useMap } from "react-leaflet";
 import MarkerClusterGroup from "react-leaflet-cluster";
 import { Truck } from "../../utils/fleet-simulator";
 
@@ -9,9 +10,23 @@ import "leaflet/dist/leaflet.css";
 interface FleetMapProps {
   staticTrucks: Truck[];
   activeFilter: string;
+  selectedTruck: Truck | null;
 }
 
-export default function FleetMap({ staticTrucks, activeFilter }: FleetMapProps) {
+function MapViewUpdater({ selectedTruck }: { selectedTruck: Truck | null }) {
+  const map = useMap();
+  useEffect(() => {
+    if (selectedTruck) {
+      map.flyTo([selectedTruck.latitude, selectedTruck.longitude], 14, {
+        animate: true,
+        duration: 1.5,
+      });
+    }
+  }, [selectedTruck, map]);
+  return null;
+}
+
+export default function FleetMap({ staticTrucks, activeFilter, selectedTruck }: FleetMapProps) {
   const preferCanvas = true;
 
   return (
@@ -26,6 +41,8 @@ export default function FleetMap({ staticTrucks, activeFilter }: FleetMapProps) 
           url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
         />
+
+        <MapViewUpdater selectedTruck={selectedTruck} />
 
         {activeFilter === "all" ? (
           <MarkerClusterGroup

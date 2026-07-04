@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import { Truck } from "../utils/fleet-simulator";
+import FleetSidebar from "./components/fleet-sidebar";
 
 const FleetMap = dynamic(() => import("./components/fleet-map"), {
   ssr: false,
@@ -19,6 +20,7 @@ const FleetMap = dynamic(() => import("./components/fleet-map"), {
 export default function FleetPage() {
   const [trucksData, setTrucksData] = useState<Truck[]>([]);
   const [activeFilter, setActiveFilter] = useState<'all' | 'emergency' | 'idle' | 'active'>('emergency');
+  const [selectedTruck, setSelectedTruck] = useState<Truck | null>(null);
   const workerRef = useRef<Worker | null>(null);
 
   useEffect(() => {
@@ -52,8 +54,8 @@ export default function FleetPage() {
   return (
     <div className="space-y-6" dir="rtl">
       <div>
-        <h1 className="text-2xl font-bold text-slate-100">غرفة العمليات المركزية لإدارة الأعطال والطوارئ 🚨</h1>
-        <p className="text-slate-400 text-sm">يتم الآن عرض الحالات التي تتطلب تدخلاً فورياً. يمكنك التبديل لرؤية الأسطول كاملاً.</p>
+        <h1 className="text-2xl font-bold text-slate-100">بوابة المراقبة الفائقة اللحظية 🌐</h1>
+        <p className="text-slate-400 text-sm">تحكم كامل وتتبع لحظي مدعوم بمعالجة ثنائية الخيوط (Multi-threaded Pipeline).</p>
       </div>
 
       <div className="flex bg-slate-900 p-1 rounded-xl border border-slate-800 w-fit gap-2">
@@ -61,23 +63,24 @@ export default function FleetPage() {
           onClick={() => handleFilterChange('emergency')}
           className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${activeFilter === 'emergency' ? 'bg-red-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-200'}`}
         >
-          🚨 الحالات الحرجة فقط
+          🚨 الحالات الحرجة
         </button>
         <button
           onClick={() => handleFilterChange('all')}
           className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${activeFilter === 'all' ? 'bg-blue-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-200'}`}
         >
-          🌐 كل الأسطول (العناقيد)
-        </button>
-        <button
-          onClick={() => handleFilterChange('active')}
-          className={`px-4 py-2 rounded-lg font-medium text-sm transition-all ${activeFilter === 'active' ? 'bg-green-600 text-white shadow-lg' : 'text-slate-400 hover:text-slate-200'}`}
-        >
-          🚚 الشاحنات المتحركة
+          🌐 كل الأسطول
         </button>
       </div>
 
-      <FleetMap staticTrucks={trucksData} activeFilter={activeFilter} />
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6 items-start">
+        <div className="lg:col-span-3">
+          <FleetMap staticTrucks={trucksData} activeFilter={activeFilter} selectedTruck={selectedTruck} />
+        </div>
+        <div className="lg:col-span-1">
+          <FleetSidebar trucks={trucksData} onTruckSelect={(truck) => setSelectedTruck(truck)} />
+        </div>
+      </div>
     </div>
   );
 }
