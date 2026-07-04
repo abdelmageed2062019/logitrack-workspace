@@ -20,6 +20,10 @@ const nextConfig: NextConfig = {
         destination: `${ANALYTICS_URL}/analytics-assets/_next/:path*`,
       },
       {
+        source: "/fleet",
+        destination: `${FLEET_URL}/fleet`,
+      },
+      {
         source: "/fleet/:path*",
         destination: `${FLEET_URL}/fleet/:path*`,
       },

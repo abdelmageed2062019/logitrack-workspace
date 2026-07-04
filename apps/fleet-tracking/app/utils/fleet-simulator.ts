@@ -16,10 +16,9 @@ const CAIRO_LAT = 30.0444;
 const CAIRO_LNG = 31.2357;
 
 const generateInitialFleet = (count: number = 2000): Truck[] => {
-     const fleet: Truck[] = [];
-     const statuses: Truck['status'][] = ['active', 'idle', 'emergency'];
+      const fleet: Truck[] = [];
 
-     for (let i = 1; i <= count; i++) {
+      for (let i = 1; i <= count; i++) {
           fleet.push({
                id: `TRUCK-${String(i).padStart(4, '0')}`,
                plateNumber: `أ ج  ${1000 + i}`,
